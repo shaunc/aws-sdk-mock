@@ -56,7 +56,6 @@ AWS.mock('SNS', 'publish', 'test-message');
 // S3 getObject mock - return a Bffer object with file data
 awsMock.mock("S3", "getObject", Buffer.from(require("fs").readFileSync("testFile.csv")));
 
-
 /**
     TESTS
 **/
@@ -66,6 +65,15 @@ AWS.restore('DynamoDB');
 AWS.restore('S3');
 // or AWS.restore(); this will restore all the methods and services
 ```
+
+Your mocks can also return promises:
+
+```js
+AWS.mock('DynamoDB', 'putItem', function (params) {
+  return Promise.resolve('successfully put item in database')
+})
+```
+
 
 You can also pass Sinon spies to the mock:
 
